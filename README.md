@@ -3,19 +3,15 @@
 Optimized AVL tree, makes AVL trees for specific car make, and stores them in TreeMap.
 
 ### Usage
-- Compile 
+- Compile from source file 
 ```bash
-javac SaleRecord.java
-javac myAVL.java
-javac program8.java
-```
-- If you prefer you can use just program8
-```bash
-javac program8.java
+javac salerecordpack/*.java
+
 ```
 - Run 
 ```bash
-java program8 car_sales_data.csv test.csv
+java salerecordpack.program8 car_sales_data.csv test.csv
+
 ```
 ### Author 
 Jere Perisic
