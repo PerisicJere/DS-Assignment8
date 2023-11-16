@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author jereperisic
+ * @version November 15, 2023
+ */
 public class program8 {
     public static void main(String[] args) {
         Map<String, myAVL> carMakeTrees = new TreeMap<>();
@@ -9,12 +13,16 @@ public class program8 {
         String resultFile = "result.csv";
         long startTime = System.currentTimeMillis();
         insertFromCSV(file, carMakeTrees);
-        processTestFile(testFile, carMakeTrees, resultFile);
+        processingTestFileAndWritingResult(testFile, carMakeTrees, resultFile);
         long endTime = System.currentTimeMillis();
         System.out.println((double) (endTime-startTime)/1000);
-
-
     }
+    /**
+     * parses a CSV line and creates a SaleRecord object
+     *
+     * @param line line from csv to parse
+     * @return SaleRecord object
+     */
     private static SaleRecord parsingCSV(String line) {
         String[] parts = line.split(",");
         if (parts.length != 9) {
@@ -32,7 +40,12 @@ public class program8 {
 
         return new SaleRecord(dateStr, salesperson, customerName, carMake, carModel, carYear, salePrice, commissionRate, commissionEarned);
     }
-
+    /**
+     * reads sales records from a CSV file and populates the carMakeTrees map with AVL trees
+     *
+     * @param csvFilePath   path to the CSV file
+     * @param carMakeTrees  car Make as a key and avl tree as a value
+     */
     private static void insertFromCSV(String csvFilePath, Map<String, myAVL> carMakeTrees) {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
@@ -54,7 +67,14 @@ public class program8 {
         } catch (IOException e) {
             e.printStackTrace();}
     }
-    private static void processTestFile(String testFile, Map<String, myAVL> carMakeTrees, String resultFile) {
+    /**
+     * processes a test file, searches for sales records based on arguments, also it writes result
+     *
+     * @param testFile       test file for search
+     * @param carMakeTrees   car Make as a key and avl tree as a value
+     * @param resultFile     result file with counts for test queries
+     */
+    private static void processingTestFileAndWritingResult(String testFile, Map<String, myAVL> carMakeTrees, String resultFile) {
         try (BufferedReader reader = new BufferedReader(new FileReader(testFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile))) {
             String line;

@@ -1,18 +1,28 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jere Perisic
+ * @version November 15, 2023
+ */
 class myAVL {
     private Node root;
 
     public myAVL() {
     }
-
+    /**
+     * Node in an AVL tree, height, left, right child.
+     */
     private static class Node {
         List<SaleRecord> saleRecords;
         Node left;
         Node right;
         int height;
-
+        /**
+         * Constructs a new Node with SaleRecord
+         *
+         * @param saleRecord SaleRecord stored in the node.
+         */
         public Node(SaleRecord saleRecord) {
             saleRecords = new ArrayList<>();
             saleRecords.add(saleRecord);
@@ -21,14 +31,24 @@ class myAVL {
             height = 1;
         }
     }
-
+    /**
+     * Returns the height of the node. Return 0 if node is null
+     *
+     * @param node node to get height
+     * @return 0 for null node or node height
+     */
     private int height(Node node) {
         if (node == null) {
             return 0;
         }
         return node.height;
     }
-
+    /**
+     * Right rotation
+     *
+     * @param y node for rotation
+     * @return new root of rotated subtree
+     */
     private Node rightRotate(Node y) {
         Node x = y.left;
         Node T2 = x.right;
@@ -41,7 +61,12 @@ class myAVL {
 
         return x;
     }
-
+    /**
+     * left rotation
+     *
+     * @param x node for rotation
+     * @return new root of rotated subtree
+     */
     private Node leftRotate(Node x) {
         Node y = x.right;
         Node T2 = y.left;
@@ -54,14 +79,34 @@ class myAVL {
 
         return y;
     }
-
+    /**
+     * Returns the balance factor of the given node, which is the difference between the heights of its left and right subtrees.
+     * If the node is null, returns 0.
+     *
+     * @param node node to get balance factor
+     * @return 0 if node null or balance factor
+     */
     private int getBalance(Node node) {
         if (node == null) {
             return 0;
         }
         return height(node.left) - height(node.right);
     }
-
+    /**
+     * add saleRecord to AVL
+     *
+     * @param saleRecord saleRecord to add to AVL
+     */
+    public void add(SaleRecord saleRecord) {
+        root = insert(root, saleRecord);
+    }
+    /**
+     * Insert saleRecord to AVL at the specified node
+     *
+     * @param node        node where saleRecord needs to be insereted
+     * @param saleRecord  saleRecord to be inserted.
+     * @return root of new subtree
+     */
     private Node insert(Node node, SaleRecord saleRecord) {
         if (node == null) {
             return new Node(saleRecord);
@@ -83,7 +128,13 @@ class myAVL {
     private void updateNodeHeightAndBalance(Node node) {
         node.height = Math.max(height(node.left), height(node.right))+ 1;
     }
-
+    /**
+     * balance tree after new insertion
+     *
+     * @param node       node to be balanced
+     * @param saleRecord saleRecord to be inserted.
+     * @return root of balance subtree
+     */
     private Node balanceNode(Node node, SaleRecord saleRecord) {
         int balance = getBalance(node);
         if (balance > 1) {
@@ -106,14 +157,22 @@ class myAVL {
     }
 
 
-    public void add(SaleRecord saleRecord) {
-        root = insert(root, saleRecord);
-    }
-
+    /**
+     * searches AVL for specific dates
+     *
+     * @param key date to be searched
+     * @return list of saleRecords on that date
+     */
     public List<SaleRecord> search(String key) {
         return search(root, key);
     }
-
+    /**
+     * searches AVL for specific dates starting at the given root
+     *
+     * @param node root of subtree
+     * @param key  date to search in AVL
+     * @return list of SaleRecords with specified date.
+     */
     private List<SaleRecord> search(Node node, String key) {
         if (node == null) {
             return new ArrayList<>();
