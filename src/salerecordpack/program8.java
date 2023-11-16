@@ -1,3 +1,5 @@
+package salerecordpack;
+
 import java.io.*;
 import java.util.*;
 
@@ -11,11 +13,8 @@ public class program8 {
         String file = args[0];
         String testFile = args[1];
         String resultFile = "result.csv";
-        long startTime = System.currentTimeMillis();
         insertFromCSV(file, carMakeTrees);
         processingTestFileAndWritingResult(testFile, carMakeTrees, resultFile);
-        long endTime = System.currentTimeMillis();
-        System.out.println((double) (endTime-startTime)/1000);
     }
     /**
      * parses a CSV line and creates a SaleRecord object

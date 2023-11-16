@@ -1,5 +1,4 @@
-import java.util.Date;
-
+package salerecordpack;
 class SaleRecord {
     String date;
     String salesperson;

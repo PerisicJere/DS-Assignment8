@@ -1,3 +1,5 @@
+package salerecordpack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ class myAVL {
     public myAVL() {
     }
     /**
-     * Node in an AVL tree, height, left, right child.
+     * node in an AVL tree, height, left, right child.
      */
     private static class Node {
         List<SaleRecord> saleRecords;
@@ -19,7 +21,7 @@ class myAVL {
         Node right;
         int height;
         /**
-         * Constructs a new Node with SaleRecord
+         * constructs a new Node with SaleRecord
          *
          * @param saleRecord SaleRecord stored in the node.
          */
@@ -32,7 +34,7 @@ class myAVL {
         }
     }
     /**
-     * Returns the height of the node. Return 0 if node is null
+     * returns 0 for null node or height of the node
      *
      * @param node node to get height
      * @return 0 for null node or node height
@@ -51,10 +53,10 @@ class myAVL {
      */
     private Node rightRotate(Node y) {
         Node x = y.left;
-        Node T2 = x.right;
+        Node T = x.right;
 
         x.right = y;
-        y.left = T2;
+        y.left = T;
 
         y.height = Math.max(height(y.left), height(y.right)) + 1;
         x.height = Math.max(height(x.left), height(x.right)) + 1;
@@ -69,10 +71,10 @@ class myAVL {
      */
     private Node leftRotate(Node x) {
         Node y = x.right;
-        Node T2 = y.left;
+        Node T = y.left;
 
         y.left = x;
-        x.right = T2;
+        x.right = T;
 
         x.height = Math.max(height(x.left), height(x.right)) + 1;
         y.height = Math.max(height(y.left), height(y.right)) + 1;
@@ -80,8 +82,7 @@ class myAVL {
         return y;
     }
     /**
-     * Returns the balance factor of the given node, which is the difference between the heights of its left and right subtrees.
-     * If the node is null, returns 0.
+     * balance factor which is difference between heights of subtrees
      *
      * @param node node to get balance factor
      * @return 0 if node null or balance factor
@@ -101,7 +102,7 @@ class myAVL {
         root = insert(root, saleRecord);
     }
     /**
-     * Insert saleRecord to AVL at the specified node
+     * insert saleRecord to AVL at the specified node
      *
      * @param node        node where saleRecord needs to be insereted
      * @param saleRecord  saleRecord to be inserted.
