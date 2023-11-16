@@ -63,44 +63,48 @@ class myAVL {
     }
 
     private Node insert(Node node, SaleRecord saleRecord) {
-        if (node == null)
+        if (node == null) {
             return new Node(saleRecord);
+        }
 
         if (saleRecord.date.compareTo(node.saleRecords.get(0).date) < 0) {
             node.left = insert(node.left, saleRecord);
-        }
-        else if (saleRecord.date.compareTo(node.saleRecords.get(0).date) > 0) {
+        } else if (saleRecord.date.compareTo(node.saleRecords.get(0).date) > 0) {
             node.right = insert(node.right, saleRecord);
-        }
-        else {
+        } else {
             node.saleRecords.add(saleRecord);
         }
-        node.height = 1 + Math.max(height(node.left), height(node.right));
 
+        updateNodeHeightAndBalance(node);
+
+        return balanceNode(node, saleRecord);
+    }
+
+    private void updateNodeHeightAndBalance(Node node) {
+        node.height = Math.max(height(node.left), height(node.right))+ 1;
+    }
+
+    private Node balanceNode(Node node, SaleRecord saleRecord) {
         int balance = getBalance(node);
-
         if (balance > 1) {
             if (saleRecord.date.compareTo(node.left.saleRecords.get(0).date) < 0) {
                 return rightRotate(node);
-            }
-            else {
+            } else {
                 node.left = leftRotate(node.left);
                 return rightRotate(node);
             }
         }
-
         if (balance < -1) {
             if (saleRecord.date.compareTo(node.right.saleRecords.get(0).date) > 0) {
                 return leftRotate(node);
-            }
-            else {
+            } else {
                 node.right = rightRotate(node.right);
                 return leftRotate(node);
             }
         }
-
         return node;
     }
+
 
     public void add(SaleRecord saleRecord) {
         root = insert(root, saleRecord);
@@ -114,17 +118,14 @@ class myAVL {
         if (node == null) {
             return new ArrayList<>();
         }
-
         List<SaleRecord> matchingSaleRecords = new ArrayList<>();
         for (SaleRecord saleRecord : node.saleRecords) {
             if (saleRecord.date.compareTo(key) == 0) {
                 matchingSaleRecords.add(saleRecord);
             }
         }
-
         List<SaleRecord> leftSubtreeResults = search(node.left, key);
         List<SaleRecord> rightSubtreeResults = search(node.right, key);
-
         matchingSaleRecords.addAll(leftSubtreeResults);
         matchingSaleRecords.addAll(rightSubtreeResults);
 

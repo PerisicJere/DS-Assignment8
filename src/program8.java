@@ -7,17 +7,19 @@ public class program8 {
         String file = args[0];
         String testFile = args[1];
         String resultFile = "result.csv";
+        long startTime = System.currentTimeMillis();
         insertFromCSV(file, carMakeTrees);
         processTestFile(testFile, carMakeTrees, resultFile);
+        long endTime = System.currentTimeMillis();
+        System.out.println((double) (endTime-startTime)/1000);
 
 
     }
-    private static SaleRecord parseCSVLine(String line) {
+    private static SaleRecord parsingCSV(String line) {
         String[] parts = line.split(",");
         if (parts.length != 9) {
             return null;
         }
-
         String dateStr = parts[0];
         String salesperson = parts[1];
         String customerName = parts[2];
@@ -40,7 +42,7 @@ public class program8 {
                     skipHeader = false;
                     continue;
                 }
-                SaleRecord saleRecord = parseCSVLine(line);
+                SaleRecord saleRecord = parsingCSV(line);
                 if (saleRecord != null) {
                     String carMake = saleRecord.getCarMake();
                     if (!carMakeTrees.containsKey(carMake)) {
@@ -59,15 +61,14 @@ public class program8 {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length != 2) {
-                    continue;
-                }
+                    continue;}
                 String carMake = parts[0].trim();
                 String date = parts[1].trim();
                 myAVL saleRecordTree = carMakeTrees.get(carMake);
                 if (saleRecordTree != null) {
                     List<SaleRecord> saleRecords = saleRecordTree.search(date);
                     writer.write(saleRecords.size() + "\n");
-                }else{
+                }else {
                     writer.write(0 + "\n");
                 }
             }
